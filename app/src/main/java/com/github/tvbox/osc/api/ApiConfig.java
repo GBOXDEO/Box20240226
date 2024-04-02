@@ -149,7 +149,7 @@ public class ApiConfig {
             ContentResolver contentResolver = getContentResolver();
     
             try {
-                使用Settings.Secure.ANDROID_ID获取Android ID
+                // 使用Settings.Secure.ANDROID_ID获取Android ID
                 androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID);
     
                 // 打印或处理Android ID
