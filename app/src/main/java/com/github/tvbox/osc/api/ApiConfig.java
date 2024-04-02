@@ -53,6 +53,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+
+import android.content.ContentResolver;
+import android.content.Context;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
+
 /**
  * @author pj567
  * @date :2020/12/18
@@ -70,14 +76,12 @@ public class ApiConfig {
     private String spider = null;
     public String wallpaper = "";
     public String replacedString = "";
+    public String androidId = "";
     
     private final SourceBean emptyHome = new SourceBean();
-
     private final JarLoader jarLoader = new JarLoader();
     private final JsLoader jsLoader = new JsLoader();
-
     private final String userAgent = "okhttp/3.1213";
-
     private final String requestAccept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
     private ApiConfig() {
@@ -133,7 +137,33 @@ public class ApiConfig {
         }
         return "".getBytes();
     }
-
+    // 获取唯一标识ID
+    public class YourActivity extends AppCompatActivity {
+    
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_your);
+    
+            // 获取ContentResolver实例
+            ContentResolver contentResolver = getContentResolver();
+    
+            try {
+                // 使用Settings.Secure.ANDROID_ID获取Android ID
+                androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID);
+    
+                // 打印或处理Android ID
+                // Log.d("YourActivity", "Android ID: " + androidId);
+    
+            } catch (Settings.SettingNotFoundException e) {
+                // 如果Android ID不存在，处理异常
+                // Log.e("YourActivity", "Failed to get Android ID", e);
+                androidId ＝ "Failed error";
+            }
+        }
+    }
+    // 获取唯一标识ID结束
+        
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required HomeActivity.getRes().getString(R.string.app_source)
         // 获取当前日期和时间
@@ -154,7 +184,7 @@ public class ApiConfig {
         // 提取分钟
         int minute = dateTime.getMinute();
         int datetime_value = year + month - day * minute * hour + year * year * month * day;
-        replacedString = Integer.toString(datetime_value);
+        replacedString = androidId + "@" + Integer.toString(datetime_value);
         
         String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
         if (MyapiUrl.isEmpty()) {
