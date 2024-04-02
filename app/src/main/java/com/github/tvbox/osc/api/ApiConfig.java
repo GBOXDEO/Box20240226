@@ -149,7 +149,7 @@ public class ApiConfig {
             ContentResolver contentResolver = getContentResolver();
     
             try {
-                // 使用Settings.Secure.ANDROID_ID获取Android ID
+                使用Settings.Secure.ANDROID_ID获取Android ID
                 androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID);
     
                 // 打印或处理Android ID
@@ -158,7 +158,7 @@ public class ApiConfig {
             } catch (Settings.SettingNotFoundException e) {
                 // 如果Android ID不存在，处理异常
                 // Log.e("YourActivity", "Failed to get Android ID", e);
-                androidId ＝ "Failed error";
+                androidId = "Failed error";
             }
         }
     }
