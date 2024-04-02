@@ -854,6 +854,7 @@ public class ApiConfig {
                     res1.deleteCharAt(res1.length() - 1);
                 }
                 return res1.toString();
+            }
         } catch (SocketException e) {
             e.printStackTrace();
             return null;
