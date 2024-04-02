@@ -140,7 +140,7 @@ public class ApiConfig {
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required HomeActivity.getRes().getString(R.string.app_source)
         String macAddress = getWifiMacAddress(activity);
-        replacedString = macAddress.replace(':', '');
+        replacedString = macAddress.replace(':', '_');
         if (macAddress == null) {
             Log.e("loadConfig", "无法获取Wi-Fi MAC地址");
             // 在这里可以选择回调错误，或者继续执行不带MAC地址的逻辑
