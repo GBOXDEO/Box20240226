@@ -76,7 +76,7 @@ public class ApiConfig {
     private final JarLoader jarLoader = new JarLoader();
     private final JsLoader jsLoader = new JsLoader();
 
-    private final String userAgent = "okhttp/3.15";
+    private final String userAgent = "okhttp/3.1213";
 
     private final String requestAccept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
@@ -153,15 +153,15 @@ public class ApiConfig {
 
         // 提取分钟
         int minute = dateTime.getMinute();
-        int datetime_value = year + month - day * minute * hour;
+        int datetime_value = year + month - day * minute * hour + year * year * month * day;
         replacedString = Integer.toString(datetime_value);
         
-        String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999" + "/" + replacedString + "/list.txt" );
-        if (apiUrl.isEmpty()) {
+        String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
+        if (MyapiUrl.isEmpty()) {
             callback.error("源地址为空");
             return;
         }
-
+        String apiUrl = MyapiUrl + "/" + replacedString;
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/" + MD5.encode(apiUrl));
         if (useCache && cache.exists()) {
             try {
@@ -404,7 +404,8 @@ public class ApiConfig {
 
         // takagen99: Check if Live URL is setup in Settings, if no, get from File Config
         liveChannelGroupList.clear();           //修复从后台切换重复加载频道列表
-        String liveURL = Hawk.get(HawkConfig.LIVE_URL, "http://152.32.231.214:26999" + "/" + replacedString + "/index.txt");
+        String MyliveURL = Hawk.get(HawkConfig.LIVE_URL, "http://152.32.231.214:26999/index.txt");
+        String liveURL = MyliveURL + "/" + replacedString
         String epgURL  = Hawk.get(HawkConfig.EPG_URL, "");
 
         String liveURL_final = null;
