@@ -819,47 +819,4 @@ public class ApiConfig {
         }
         return url;
     }
-    /**
-     * 获取设备的Wi-Fi MAC地址
-     *
-     * @param context 应用的上下文
-     * @return Wi-Fi MAC地址，如果无法获取则返回null
-     */
-    private String getWifiMacAddress(Context context) {
-        /**
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        if (wifiManager != null) {
-            WifiInfo info = wifiManager.getConnectionInfo();
-            if (info != null) {
-                return info.getMacAddress();
-            }
-        }
-        return null;
-        */
-        // 获取MAC地址
-        try {
-            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface nif : all) {
-                byte[] macBytes = nif.getHardwareAddress();
-                if (macBytes == null) {
-                    continue;
-                }
-    
-                // 将MAC地址字节转换为字符串形式
-                StringBuilder res1 = new StringBuilder();
-                for (byte b : macBytes) {
-                    res1.append(Integer.toHexString(b & 0xFF) + ":");
-                }
-    
-                // 删除最后的冒号
-                if (res1.length() > 0) {
-                    res1.deleteCharAt(res1.length() - 1);
-                }
-                return res1.toString();
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }
