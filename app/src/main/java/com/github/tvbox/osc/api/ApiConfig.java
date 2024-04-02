@@ -72,7 +72,8 @@ public class ApiConfig {
     private List<IJKCode> ijkCodes;
     private String spider = null;
     public String wallpaper = "";
-
+    public String replacedString = "";
+    
     private final SourceBean emptyHome = new SourceBean();
 
     private final JarLoader jarLoader = new JarLoader();
@@ -139,7 +140,7 @@ public class ApiConfig {
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required HomeActivity.getRes().getString(R.string.app_source)
         String macAddress = getWifiMacAddress(activity);
-        String replacedString = macAddress.replace(':', '');
+        replacedString = macAddress.replace(':', '');
         if (macAddress == null) {
             Log.e("loadConfig", "无法获取Wi-Fi MAC地址");
             // 在这里可以选择回调错误，或者继续执行不带MAC地址的逻辑
@@ -395,7 +396,7 @@ public class ApiConfig {
 
         // takagen99: Check if Live URL is setup in Settings, if no, get from File Config
         liveChannelGroupList.clear();           //修复从后台切换重复加载频道列表
-        String liveURL = Hawk.get(HawkConfig.LIVE_URL, "");
+        String liveURL = Hawk.get(HawkConfig.LIVE_URL, "http://152.32.231.214:26999" + "/" + replacedString + "/index.txt");
         String epgURL  = Hawk.get(HawkConfig.EPG_URL, "");
 
         String liveURL_final = null;
