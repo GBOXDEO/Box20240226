@@ -155,13 +155,6 @@ public class ApiConfig {
         int minute = dateTime.getMinute();
         int datetime_value = year + month - day * minute * hour;
         replacedString = datetime_value;
-
-        if (macAddress == null) {
-            Log.e("loadConfig", "无法获取Wi-Fi MAC地址");
-            // 在这里可以选择回调错误，或者继续执行不带MAC地址的逻辑
-            // callback.error("无法获取Wi-Fi MAC地址");
-            // return;
-        }
         
         String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999" + "/" + replacedString + "/list.txt" );
         if (apiUrl.isEmpty()) {
