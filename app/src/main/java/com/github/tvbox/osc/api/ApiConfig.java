@@ -53,8 +53,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import android.provider.Settings;
-import android.provider.Settings.Secure;
 /**
  * @author pj567
  * @date :2020/12/18
@@ -157,7 +155,7 @@ public class ApiConfig {
         int minute = dateTime.getMinute();
         int datetime_value = year + month - day * minute * hour;
         String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        replacedString = androidId + "@" + Integer.toString(datetime_value);
+        replacedString = Integer.toString(datetime_value);
         
         String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999" + "/" + replacedString + "/list.txt" );
         if (apiUrl.isEmpty()) {
