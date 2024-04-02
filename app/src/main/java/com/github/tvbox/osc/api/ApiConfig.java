@@ -49,10 +49,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.util.Log;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 /**
  * @author pj567
  * @date :2020/12/18
@@ -135,31 +138,20 @@ public class ApiConfig {
 
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required HomeActivity.getRes().getString(R.string.app_source)
-        String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214/list.txt");
+        String macAddress = getWifiMacAddress(activity);
+        if (macAddress == null) {
+            Log.e("loadConfig", "无法获取Wi-Fi MAC地址");
+            // 在这里可以选择回调错误，或者继续执行不带MAC地址的逻辑
+            // callback.error("无法获取Wi-Fi MAC地址");
+            // return;
+        }
+        
+        String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214/list.txt" + "/" + macAddress);
         if (apiUrl.isEmpty()) {
             callback.error("源地址为空");
             return;
         }
-        // 获取当前日期和时间
-        ZonedDateTime dateTime = ZonedDateTime.now();
 
-        // 提取年份
-        int year = dateTime.getYear();
-
-        // 提取月份（注意：月份是从1开始的，1代表1月）
-        int month = dateTime.getMonthValue();
-
-        // 提取日
-        int day = dateTime.getDayOfMonth();
-
-        // 提取小时（24小时制）
-        int hour = dateTime.getHour();
-
-        // 提取分钟
-        int minute = dateTime.getMinute();
-        int datetime_value = year + month - day * minute * hour;
-        apiUrl = apiUrl +"/" + datetime_value;
-        
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/" + MD5.encode(apiUrl));
         if (useCache && cache.exists()) {
             try {
@@ -826,5 +818,20 @@ public class ApiConfig {
         }
         return url;
     }
-
+    /**
+     * 获取设备的Wi-Fi MAC地址
+     *
+     * @param context 应用的上下文
+     * @return Wi-Fi MAC地址，如果无法获取则返回null
+     */
+    private String getWifiMacAddress(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager != null) {
+            WifiInfo info = wifiManager.getConnectionInfo();
+            if (info != null) {
+                return info.getMacAddress();
+            }
+        }
+        return null;
+    }
 }
