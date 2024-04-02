@@ -154,7 +154,6 @@ public class ApiConfig {
         // 提取分钟
         int minute = dateTime.getMinute();
         int datetime_value = year + month - day * minute * hour;
-        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         replacedString = Integer.toString(datetime_value);
         
         String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999" + "/" + replacedString + "/list.txt" );
