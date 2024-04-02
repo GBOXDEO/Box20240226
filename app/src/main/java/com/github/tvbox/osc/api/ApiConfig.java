@@ -49,13 +49,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.content.Context;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.util.Log;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.List;
 /**
  * @author pj567
  * @date :2020/12/18
@@ -827,6 +824,7 @@ public class ApiConfig {
      * @return Wi-Fi MAC地址，如果无法获取则返回null
      */
     private String getWifiMacAddress(Context context) {
+        /**
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         if (wifiManager != null) {
             WifiInfo info = wifiManager.getConnectionInfo();
@@ -835,5 +833,30 @@ public class ApiConfig {
             }
         }
         return null;
+        */
+        // 获取MAC地址
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    continue;
+                }
+    
+                // 将MAC地址字节转换为字符串形式
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+    
+                // 删除最后的冒号
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+        } catch (SocketException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
