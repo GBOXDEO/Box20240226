@@ -405,7 +405,7 @@ public class ApiConfig {
         // takagen99: Check if Live URL is setup in Settings, if no, get from File Config
         liveChannelGroupList.clear();           //修复从后台切换重复加载频道列表
         String MyliveURL = Hawk.get(HawkConfig.LIVE_URL, "http://152.32.231.214:26999/index.txt");
-        String liveURL = MyliveURL + "/" + replacedString
+        String liveURL = MyliveURL + "/" + replacedString;
         String epgURL  = Hawk.get(HawkConfig.EPG_URL, "");
 
         String liveURL_final = null;
