@@ -53,6 +53,8 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collections;
 import java.util.List;
+import android.content.Context;
+import android.util.Log;
 /**
  * @author pj567
  * @date :2020/12/18
