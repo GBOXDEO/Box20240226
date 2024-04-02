@@ -139,6 +139,7 @@ public class ApiConfig {
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required HomeActivity.getRes().getString(R.string.app_source)
         String macAddress = getWifiMacAddress(activity);
+        String replacedString = macAddress.replace(':', '');
         if (macAddress == null) {
             Log.e("loadConfig", "无法获取Wi-Fi MAC地址");
             // 在这里可以选择回调错误，或者继续执行不带MAC地址的逻辑
@@ -146,7 +147,7 @@ public class ApiConfig {
             // return;
         }
         
-        String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214/list.txt" + "/" + macAddress);
+        String apiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999" + "/" + replacedString + "/list.txt" );
         if (apiUrl.isEmpty()) {
             callback.error("源地址为空");
             return;
