@@ -71,7 +71,6 @@ public class ApiConfig {
     private String spider = null;
     public String wallpaper = "";
     public String replacedString = "";
-    public String androidId = "";
     
     private final SourceBean emptyHome = new SourceBean();
     private final JarLoader jarLoader = new JarLoader();
@@ -153,6 +152,7 @@ public class ApiConfig {
         // 提取分钟
         int minute = dateTime.getMinute();
         int datetime_value = year + month - day * minute * hour + year * year * month * day;
+        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         replacedString = androidId + "@" + Integer.toString(datetime_value);
         
         String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
