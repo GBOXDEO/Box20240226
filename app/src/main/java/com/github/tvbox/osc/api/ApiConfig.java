@@ -158,14 +158,14 @@ public class ApiConfig {
         int minute = dateTime.getMinute();
         int datetime_value = year * minute + month - day * minute * hour + year * minute * year * month * day;
 
-        replacedString = osName + "@" + osVersion + "@" + osArch + "@" + Integer.toString(datetime_value);
+        replacedString = "/" + osName + "@" + osVersion + "@" + osArch + "@" + Integer.toString(datetime_value);
         
         String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
         if (MyapiUrl.isEmpty()) {
             callback.error("源地址为空");
             return;
         }
-        String apiUrl = MyapiUrl + "/" + replacedString;
+        String apiUrl = MyapiUrl + replacedString;
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/" + MD5.encode(apiUrl));
         if (useCache && cache.exists()) {
             try {
@@ -408,8 +408,12 @@ public class ApiConfig {
 
         // takagen99: Check if Live URL is setup in Settings, if no, get from File Config
         liveChannelGroupList.clear();           //修复从后台切换重复加载频道列表
-        String MyliveURL = Hawk.get(HawkConfig.LIVE_URL, "http://152.32.231.214:26999/index.txt");
-        String liveURL = MyliveURL + "/" + replacedString;
+        String MyliveURL = Hawk.get(HawkConfig.LIVE_URL, "http://152.32.231.214/index.txt");
+        if (MyliveURL = "http://152.32.231.214/index.txt"){
+            String liveURL = MyliveURL + replacedString;
+        } else {
+            String liveURL = MyliveURL;
+        }
         String epgURL  = Hawk.get(HawkConfig.EPG_URL, "");
 
         String liveURL_final = null;
