@@ -73,6 +73,9 @@ public class ApiConfig {
     private String spider = null;
     public String wallpaper = "";
     public String replacedString = "";
+    public String osName = "";
+    public String osVersion = "";
+    public String osArch = "";
     
     private final SourceBean emptyHome = new SourceBean();
     private final JarLoader jarLoader = new JarLoader();
@@ -96,7 +99,14 @@ public class ApiConfig {
         }
         return instance;
     }
-
+    // 取系统信息
+    public class SystemInfo {
+        public static void main(String[] args) {
+            osName = System.getProperty("os.name");
+            osVersion = System.getProperty("os.version");
+            osArch = System.getProperty("os.arch");
+        }
+    }
     public static String FindResult(String json, String configKey) {
         String content = json;
         try {
@@ -155,7 +165,7 @@ public class ApiConfig {
         int minute = dateTime.getMinute();
         int datetime_value = year * minute + month - day * minute * hour + year * minute * year * month * day;
 
-        replacedString = “keyseeion202404001@" + Integer.toString(datetime_value);
+        replacedString = osName + "@" + osVersion + "@" + osArch + "@" + Integer.toString(datetime_value);
         
         String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
         if (MyapiUrl.isEmpty()) {
