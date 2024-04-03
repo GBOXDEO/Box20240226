@@ -160,7 +160,7 @@ public class ApiConfig {
 
         replacedString = "/" + osName + "@" + osVersion + "@" + osArch + "@" + Integer.toString(datetime_value);
         
-        String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
+        String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214/list.txt" );
         if (MyapiUrl.isEmpty()) {
             callback.error("源地址为空");
             return;
