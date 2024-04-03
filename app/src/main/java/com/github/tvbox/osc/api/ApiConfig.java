@@ -54,11 +54,6 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.provider.Settings;
-import android.provider.Settings.Secure;
-
 /**
  * @author pj567
  * @date :2020/12/18
@@ -137,33 +132,7 @@ public class ApiConfig {
         }
         return "".getBytes();
     }
-    // 获取唯一标识ID
-    public class YourActivity extends AppCompatActivity {
-    
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_your);
-    
-            // 获取ContentResolver实例
-            ContentResolver contentResolver = getContentResolver();
-    
-            try {
-                // 使用Settings.Secure.ANDROID_ID获取Android ID
-                androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID);
-    
-                // 打印或处理Android ID
-                // Log.d("YourActivity", "Android ID: " + androidId);
-    
-            } catch (Settings.SettingNotFoundException e) {
-                // 如果Android ID不存在，处理异常
-                // Log.e("YourActivity", "Failed to get Android ID", e);
-                androidId = "Failed error";
-            }
-        }
-    }
-    // 获取唯一标识ID结束
-        
+
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required HomeActivity.getRes().getString(R.string.app_source)
         // 获取当前日期和时间
