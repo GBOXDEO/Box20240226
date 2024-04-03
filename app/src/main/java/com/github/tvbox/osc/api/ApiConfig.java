@@ -73,9 +73,6 @@ public class ApiConfig {
     private String spider = null;
     public String wallpaper = "";
     public String replacedString = "";
-    public static String osName;
-    public static String osVersion;
-    public static String osArch;
     
     private final SourceBean emptyHome = new SourceBean();
     private final JarLoader jarLoader = new JarLoader();
@@ -99,14 +96,7 @@ public class ApiConfig {
         }
         return instance;
     }
-    // 取系统信息
-    public class SystemInfo {
-        public static void main(String[] args) {
-            osName = System.getProperty("os.name");
-            osVersion = System.getProperty("os.version");
-            osArch = System.getProperty("os.arch");
-        }
-    }
+
     public static String FindResult(String json, String configKey) {
         String content = json;
         try {
@@ -146,6 +136,9 @@ public class ApiConfig {
 
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required HomeActivity.getRes().getString(R.string.app_source)
+        String osName = System.getProperty("os.name");
+        String osVersion = System.getProperty("os.version");
+        String osArch = System.getProperty("os.arch");
         // 获取当前日期和时间
         ZonedDateTime dateTime = ZonedDateTime.now();
 
