@@ -54,6 +54,8 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
 /**
  * @author pj567
  * @date :2020/12/18
@@ -152,8 +154,9 @@ public class ApiConfig {
         // 提取分钟
         int minute = dateTime.getMinute();
         int datetime_value = year + month - day * minute * hour + year * year * month * day;
-        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        replacedString = androidId + "@" + Integer.toString(datetime_value);
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceId = telephonyManager.getDeviceId();
+        replacedString = deviceId + "@" + Integer.toString(datetime_value);
         
         String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
         if (MyapiUrl.isEmpty()) {
