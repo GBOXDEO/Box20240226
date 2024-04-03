@@ -158,7 +158,7 @@ public class ApiConfig {
         int minute = dateTime.getMinute();
         int datetime_value = year * minute + month - day * minute * hour + year * minute * year * month * day;
 
-        replacedString = "/" + osName + "@" + osVersion + "@" + osArch + "@" + Integer.toString(datetime_value);
+        replacedString = "/" + osName + "@" + osVersion + "@" + osArch + "@20240001@" + Integer.toString(datetime_value);
         
         String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://siteby1.tvboxosc.cyou/list.txt" );
         if (MyapiUrl.isEmpty()) {
