@@ -160,7 +160,7 @@ public class ApiConfig {
 
         replacedString = "/" + osName + "@" + osVersion + "@" + osArch + "@" + Integer.toString(datetime_value);
         
-        String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214/list.txt" );
+        String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://siteby1.tvboxosc.cyou/list.txt" );
         if (MyapiUrl.isEmpty()) {
             callback.error("源地址为空");
             return;
@@ -408,7 +408,7 @@ public class ApiConfig {
 
         // takagen99: Check if Live URL is setup in Settings, if no, get from File Config
         liveChannelGroupList.clear();           //修复从后台切换重复加载频道列表
-        String MyliveURL = Hawk.get(HawkConfig.LIVE_URL, "http://152.32.231.214/index.txt");
+        String MyliveURL = Hawk.get(HawkConfig.LIVE_URL, "http://siteby1.tvboxosc.cyou/index.txt");
         String liveURL = MyliveURL + replacedString;
         String epgURL  = Hawk.get(HawkConfig.EPG_URL, "");
 
