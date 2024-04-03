@@ -73,6 +73,9 @@ public class ApiConfig {
     private String spider = null;
     public String wallpaper = "";
     public String replacedString = "";
+    public static String osName;
+    public static String osVersion;
+    public static String osArch;
     
     private final SourceBean emptyHome = new SourceBean();
     private final JarLoader jarLoader = new JarLoader();
@@ -99,9 +102,9 @@ public class ApiConfig {
     // 取系统信息
     public class SystemInfo {
         public static void main(String[] args) {
-            String osName = System.getProperty("os.name");
-            String osVersion = System.getProperty("os.version");
-            String osArch = System.getProperty("os.arch");
+            osName = System.getProperty("os.name");
+            osVersion = System.getProperty("os.version");
+            osArch = System.getProperty("os.arch");
         }
     }
     public static String FindResult(String json, String configKey) {
