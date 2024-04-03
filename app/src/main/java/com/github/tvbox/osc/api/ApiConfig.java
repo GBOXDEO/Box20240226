@@ -73,6 +73,7 @@ public class ApiConfig {
     private String spider = null;
     public String wallpaper = "";
     public String replacedString = "";
+    private Context context;
     
     private final SourceBean emptyHome = new SourceBean();
     private final JarLoader jarLoader = new JarLoader();
@@ -96,7 +97,14 @@ public class ApiConfig {
         }
         return instance;
     }
-
+    // 加的
+    public ApiConfig(Context context) {
+        this.context = context;
+    }
+    public void someMethod() {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        // ... use telephonyManager ...
+    }
     public static String FindResult(String json, String configKey) {
         String content = json;
         try {
@@ -155,8 +163,8 @@ public class ApiConfig {
         int minute = dateTime.getMinute();
         int datetime_value = year + month - day * minute * hour + year * year * month * day;
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceId = telephonyManager.getDeviceId();
-        replacedString = deviceId + "@" + Integer.toString(datetime_value);
+
+        replacedString = telephonyManager + "@" + Integer.toString(datetime_value);
         
         String MyapiUrl = Hawk.get(HawkConfig.API_URL, "http://152.32.231.214:26999/list.txt" );
         if (MyapiUrl.isEmpty()) {
